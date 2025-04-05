@@ -70,6 +70,11 @@ const model = ref([
                 to: '/pages/notfound'
             },
             {
+                label: 'ИВТ',
+                icon: 'pi pi-fw pi-exclamation-circle',
+                to: '/pages/ivt'
+            },
+            {
                 label: 'Empty',
                 icon: 'pi pi-fw pi-circle-off',
                 to: '/pages/empty'

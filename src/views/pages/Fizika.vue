@@ -465,6 +465,79 @@ const downloadFile = () => {
     link.click();
     document.body.removeChild(link);
 };
+
+const selectedCountry = ref();
+const countries = ref([
+    { name: 'Australia', code: 'AU' },
+    { name: 'Brazil', code: 'BR' },
+    { name: 'China', code: 'CN' },
+    { name: 'Egypt', code: 'EG' },
+    { name: 'France', code: 'FR' }
+]);
+
+const data = ref({
+    key: '0',
+    type: 'country',
+    label: 'Argentina',
+    data: 'ar',
+    children: [
+        {
+            key: '0_0',
+            type: 'country',
+            label: 'Argentina',
+            data: 'ar',
+            children: [
+                {
+                    key: '0_0_0',
+                    type: 'country',
+                    label: 'Argentina',
+                    data: 'ar'
+                },
+                {
+                    key: '0_0_1',
+                    type: 'country',
+                    label: 'Croatia',
+                    data: 'hr'
+                }
+            ]
+        },
+        {
+            key: '0_1',
+            type: 'country',
+            label: 'France',
+            data: 'fr',
+            children: [
+                {
+                    key: '0_1_0',
+                    type: 'country',
+                    label: 'France',
+                    data: 'fr'
+                },
+                {
+                    key: '0_1_1',
+                    type: 'country',
+                    label: 'Morocco',
+                    data: 'ma'
+                }
+            ]
+        }
+    ]
+});
+
+const messages = ref([]);
+let count = ref(0);
+
+const addMessages = () => {
+    messages.value = [
+        { severity: 'info', content: 'Dynamic Info Message', id: count.value++ },
+        { severity: 'success', content: 'Dynamic Success Message', id: count.value++ },
+        { severity: 'warn', content: 'Dynamic Warn Message', id: count.value++ }
+    ];
+};
+
+const clearMessages = () => {
+    messages.value = [];
+};
 </script>
 
 <template>
@@ -484,11 +557,21 @@ const downloadFile = () => {
                 </Timeline>
         </div>
     </div>
+    <div class ="card">
     <div class="flex flex-col md:flex-row gap-8 mt-6">
         <div class="md:w-1/3">
             <div class="card">
                 <div class="font-semibold text-xl mb-4">Лекции</div>
-                <Menu :model="menuitems" />
+                <div class="card flex justify-center">
+                    <Listbox v-model="selectedCountry" :options="countries" optionLabel="name" class="w-full md:w-56" listStyle="max-height:250px">
+                        <template #option="slotProps">
+                            <div class="flex items-center">
+                                <img :alt="slotProps.option.name" src="https://primefaces.org/cdn/primevue/images/flag/flag_placeholder.png" :class="`flag flag-${slotProps.option.code.toLowerCase()} mr-2`" style="width: 18px" />
+                                <div>{{ slotProps.option.name }}</div>
+                            </div>
+                        </template>
+                    </Listbox>
+                </div>
             </div>
         </div>
         <div class="md:w-1/3">
@@ -503,5 +586,30 @@ const downloadFile = () => {
                 <Menu :model="menuitemslab" />
             </div>
         </div>
+    </div>
+    </div>
+    <div class ="card">
+    <div class="card overflow-x-auto">
+        <OrganizationChart :value="data" collapsible>
+            <template #country="slotProps">
+                <div class="flex flex-col items-center">
+                    <img :alt="slotProps.node.label" src="https://primefaces.org/cdn/primevue/images/flag/flag_placeholder.png" :class="`w-2rem flag flag-${slotProps.node.data}`" />
+                    <div class="mt-4 font-medium text-lg">{{ slotProps.node.label }}</div>
+                </div>
+            </template>
+            <template #default="slotProps">
+                <span>{{slotProps.node.data.label}}</span>
+            </template>
+        </OrganizationChart>
+    </div>
+    </div>
+    <div class="card flex flex-col items-center justify-center gap-4">
+        <div class="flex gap-2">
+            <Button label="Show" @click="addMessages()" />
+            <Button label="Clear" severity="secondary" @click="clearMessages()" />
+        </div>
+        <transition-group name="p-message" tag="div" class="flex flex-col">
+            <Message v-for="msg of messages" :key="msg.id" :severity="msg.severity" class="mt-4">{{ msg.content }}</Message>
+        </transition-group>
     </div>
 </template>

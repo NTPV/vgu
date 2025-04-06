@@ -75,6 +75,11 @@ const model = ref([
                 to: '/pages/ivt'
             },
             {
+                label: 'Физика',
+                icon: 'pi pi-fw pi-exclamation-circle',
+                to: '/pages/fizika'
+            },
+            {
                 label: 'Empty',
                 icon: 'pi pi-fw pi-circle-off',
                 to: '/pages/empty'

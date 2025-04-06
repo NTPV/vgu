@@ -100,6 +100,11 @@ const router = createRouter({
                     component: () => import('@/views/pages/Ivt.vue')
                 },
                 {
+                    path: '/pages/fizika',
+                    name: 'fizika',
+                    component: () => import('@/views/pages/Fizika.vue')
+                },
+                {
                     path: '/pages/crud',
                     name: 'crud',
                     component: () => import('@/views/pages/Crud.vue')

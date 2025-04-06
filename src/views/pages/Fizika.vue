@@ -373,6 +373,98 @@ const panelMenuitems = ref([
 const openLink = (url) => {
   window.open(url, '_blank'); // Открывает ссылку в новой вкладке
 };
+
+const menuitems = ref([
+    {
+        label: 'Customers',
+        items: [
+            {
+                label: 'New',
+                icon: 'pi pi-fw pi-plus',
+                command: () => downloadFile() // Добавляем обработчик события
+            },
+            {
+                label: 'Edit',
+                icon: 'pi pi-fw pi-user-edit'
+            }
+        ]
+    },
+    {
+        label: 'Orders',
+        items: [
+            {
+                label: 'View',
+                icon: 'pi pi-fw pi-list'
+            },
+            {
+                label: 'Search',
+                icon: 'pi pi-fw pi-search'
+            }
+        ]
+    }
+]);
+
+const menuitemslab = ref([
+    {
+        label: 'Матмоделирование',
+        items: [
+            {
+                label: '1. вывод графика',
+                icon: 'pi pi-fw pi-plus',
+                command: () => downloadFile() // Добавляем обработчик события
+            },
+            {
+                label: '2. Погрешности',
+                icon: 'pi pi-fw pi-plus',
+                command: () => downloadFile() // Добавляем обработчик события
+            },
+            {
+                label: '3. Интерполяции',
+                icon: 'pi pi-fw pi-plus',
+                command: () => downloadFile() // Добавляем обработчик события
+            },
+            {
+                label: '4. задание по МНК',
+                icon: 'pi pi-fw pi-user-edit'
+            },
+            {
+                label: '5. Распределения',
+                icon: 'pi pi-fw pi-plus',
+                command: () => downloadFile() // Добавляем обработчик события
+            },
+            {
+                label: '6. Интегрирование',
+                icon: 'pi pi-fw pi-plus',
+                command: () => downloadFile() // Добавляем обработчик события
+            },
+            {
+                label: '7. Методы решения НУ',
+                icon: 'pi pi-fw pi-plus',
+                command: () => downloadFile() // Добавляем обработчик события
+            },
+            {
+                label: '8. Экстремум функции',
+                icon: 'pi pi-fw pi-plus',
+                command: () => downloadFile() // Добавляем обработчик события
+            },
+            {
+                label: '9. Задание по ОДУ',
+                icon: 'pi pi-fw pi-plus',
+                command: () => downloadFile() // Добавляем обработчик события
+            }
+        ]
+    }
+]);
+
+// Функция для скачивания файла
+const downloadFile = () => {
+    const link = document.createElement('a');
+    link.href = '/filefortest'; // Замените на URL вашего файла
+    link.download = 'test.txt'; // Замените на желаемое имя файла
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+};
 </script>
 
 <template>
@@ -392,5 +484,24 @@ const openLink = (url) => {
                 </Timeline>
         </div>
     </div>
+    <div class="flex flex-col md:flex-row gap-8 mt-6">
+        <div class="md:w-1/3">
+            <div class="card">
+                <div class="font-semibold text-xl mb-4">Лекции</div>
+                <Menu :model="menuitems" />
+            </div>
+        </div>
+        <div class="md:w-1/3">
+            <div class="card">
+                <div class="font-semibold text-xl mb-4">Теория</div>
+                <Menu :model="menuitemslab" />
+            </div>
+        </div>
+        <div class="md:w-1/3">
+            <div class="card">
+                <div class="font-semibold text-xl mb-4">Лабы</div>
+                <Menu :model="menuitemslab" />
+            </div>
+        </div>
+    </div>
 </template>
-

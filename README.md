@@ -1,2 +1,2 @@
 # vgu
- test vgu site
+ test vsu site.
